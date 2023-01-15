@@ -70,7 +70,9 @@
           >Ocena między 1-10</span
         >
       </div>
-      <AppButton text="Edytuj" color="indigo" />
+      <AppButton
+        text="Edytuj"
+        class="mt-auto mb-2 bg-indigo-500 shadow-lg shadow-indigo-500/50 text-white font-bold hover:bg-indigo-800 hover:shadow-indigo-800/50" />
     </form>
   </div>
 </template>

@@ -5,7 +5,7 @@
     tag="ul"
     mode="out-in">
     <AppMoveListItem
-      v-for="move in moveList"
+      v-for="move in moveLisWithNoDuplication"
       :key="move.idx"
       :move="move"
       :editMove="edit"
@@ -63,6 +63,17 @@ export default {
 
     const moveList = ref([]);
 
+    const moveLisWithNoDuplication = computed(() => {
+      const ArrayMoveList = moveList.value.filter(
+        (value, index, self) =>
+          index ===
+          self.findIndex(
+            (t) => t.title === value.title
+          )
+      );
+      return ArrayMoveList;
+    });
+
     const flag = computed(() => {
       return props.flag;
     });
@@ -98,6 +109,7 @@ export default {
 
     const showModalDelete = ref(false);
     const delMoveHandler = ref();
+
     function delMove(move) {
       delMoveHandler.value = {};
       delMoveHandler.value = {...move};
@@ -128,6 +140,7 @@ export default {
       showModalDelete,
       deleteMoveF,
       closeDelModal,
+      moveLisWithNoDuplication,
     };
   },
 };

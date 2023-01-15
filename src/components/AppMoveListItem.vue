@@ -14,21 +14,19 @@
     </div>
     <div class="flex gap-3">
       <AppButton
-        class="mt-auto mb-2"
+        class="mt-auto mb-2 bg-red-500 shadow-lg shadow-red-500/50 text-white font-bold hover:bg-red-800 hover:shadow-red-800/50"
         text="Usuń"
-        color="red"
         @click="delateMove(move)" />
       <AppButton
-        class="mt-auto mb-2"
         text="Edytuj"
-        color="indigo"
+        class="mt-auto mb-2 bg-indigo-500 shadow-lg shadow-indigo-500/50 text-white font-bold hover:bg-indigo-800 hover:shadow-indigo-800/50"
         @click="editMove(move)" />
     </div>
   </li>
 </template>
 
 <script>
-import AppButton from './AppButton.vue';
+import AppButton from '@/components/AppButton.vue';
 export default {
   name: 'MoveListItem',
   components: {AppButton},

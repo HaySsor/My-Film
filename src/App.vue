@@ -4,9 +4,16 @@
       class="bg-zinc-50 rounded-xl screen border-none p-4 overflow-hidden">
       <header
         class="border-b-2 pb-3 flex items-center justify-between relative">
-        <AppButton text="Pobierz" color="indigo" @click="getDataFromAPI" />
+        <AppButton
+          text="Pobierz"
+          class="bg-green-500 shadow-lg shadow-green-500/50 text-white font-bold hover:bg-green-800 hover:shadow-green-800/50"
+          @click="getDataFromAPI" />
         <h1 class="font-bold text-4xl text-center flex-1 Font">Move-App</h1>
-        <AppButton @click="addMove" text="Dodaj" color="indigo" />
+        <AppButton
+          @click="addMove"
+          text="Dodaj"
+          color="indigo"
+          class="bg-indigo-500 shadow-lg shadow-indigo-500/50 text-white font-bold hover:bg-indigo-800 hover:shadow-indigo-800/50" />
       </header>
       <main class="h-full pt-5 overflow-scroll">
         <AppMoveList
@@ -18,7 +25,7 @@
   </main>
 </template>
 <script>
-import AppButton from '@/components/AppButton.vue';
+import AppButton from './components/AppButton.vue';
 import AppMoveList from '@/components/AppMoveList.vue';
 import {ref} from 'vue';
 export default {
@@ -55,7 +62,7 @@ export default {
   position: relative;
   background-image: url('../public/movie-theater-g0dc112e18_1920.png');
   background-position: center;
-  
+
   background-repeat: no-repeat;
 }
 .screen::after,
