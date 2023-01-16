@@ -4,6 +4,7 @@
     class="flex flex-col gap-2 mb-20"
     tag="ul"
     mode="out-in">
+    <div class="text-xl text-center" v-if="loading">Pobieranie filmów ...</div>
     <AppMoveListItem
       v-for="move in moveLisWithNoDuplication"
       :key="move.idx"
@@ -11,6 +12,7 @@
       :editMove="edit"
       :delateMove="delMove" />
   </TransitionGroup>
+  <AppErrorGetDataFromAPI v-if="errorMessage" :errorMessage="errorMessage" />
   <AppModalEdit
     v-if="showModal"
     :move="eMove"
@@ -35,6 +37,7 @@ import {ref, computed, watch, TransitionGroup} from 'vue';
 import getIdX from '../helper/moveIndex';
 import getFilm from '../composables/getData';
 import AppDeleteModal from '../components/AppDeleteModal.vue';
+import AppErrorGetDataFromAPI from './AppErrorGetDataFromAPI.vue';
 
 export default {
   name: 'AppMoveList',
@@ -44,6 +47,7 @@ export default {
     AppModalAdd,
     TransitionGroup,
     AppDeleteModal,
+    AppErrorGetDataFromAPI,
   },
   props: {
     showModalAdd: {
@@ -59,19 +63,24 @@ export default {
     },
   },
   setup(props) {
-    const {moveListFromAPI, getData} = getFilm();
-
+    const {loading, fallingGetData, moveListFromAPI, getData} = getFilm();
+    const errorMessage = ref(fallingGetData);
     const moveList = ref([]);
 
     const moveLisWithNoDuplication = computed(() => {
       const ArrayMoveList = moveList.value.filter(
         (value, index, self) =>
-          index ===
-          self.findIndex(
-            (t) => t.title === value.title
-          )
+          index === self.findIndex((t) => t.title === value.title)
       );
       return ArrayMoveList;
+    });
+    watch(errorMessage, () => {
+      console.log(errorMessage.value);
+      if (errorMessage.value) {
+        setTimeout(() => {
+          errorMessage.value = !errorMessage.value;
+        }, 2000);
+      }
     });
 
     const flag = computed(() => {
@@ -79,6 +88,10 @@ export default {
     });
     watch(flag, async () => {
       await getData();
+      if (errorMessage.value) {
+        return;
+      }
+
       moveListFromAPI.value.forEach((item) => {
         moveList.value.push(item);
       });
@@ -141,6 +154,8 @@ export default {
       deleteMoveF,
       closeDelModal,
       moveLisWithNoDuplication,
+      loading,
+      errorMessage,
     };
   },
 };

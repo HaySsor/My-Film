@@ -4,15 +4,25 @@ import getIdX from '../helper/moveIndex'
 
 const getFilm = () => {
     const moveListFromAPI = ref()
+    const loading = ref(false)
+    const fallingGetData = ref(false)
     const getData = async () => {
-        const res = await axios.get("http://localhost:3000/move")
-        const data = await res.data;
-        const moveL = data.map(item => {
-            return { ...item, idx: getIdX() }
-        })
-        moveListFromAPI.value = moveL
+        try {
+            loading.value = true
+            const res = await axios.get("http://localhost:3000/move")
+            const data = await res.data;
+            const moveL = data.map(item => {
+                return { ...item, idx: getIdX() }
+            })
+            moveListFromAPI.value = moveL
+            loading.value = false
+        } catch (err) {
+            fallingGetData.value = true
+            loading.value = false
+        }
+
     }
-    return { moveListFromAPI, getData }
+    return { loading, fallingGetData, moveListFromAPI, getData }
 }
 
 export default getFilm

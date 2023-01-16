@@ -60,10 +60,6 @@ export default {
   width: 600px;
   height: 600px;
   position: relative;
-  background-image: url('../public/movie-theater-g0dc112e18_1920.png');
-  background-position: center;
-
-  background-repeat: no-repeat;
 }
 .screen::after,
 .screen::before {
